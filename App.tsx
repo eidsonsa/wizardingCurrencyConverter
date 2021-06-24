@@ -21,9 +21,9 @@
 
  import AsyncStorage from '@react-native-community/async-storage'
 
- const Item = (val: number) => (
-  <View>
-    <Text>{val}</Text>
+ const Item = (item: {val: number, title: string}) => (
+  <View style={styles.itemList}>
+    <Text style={styles.itemText}>{item.val} {item.title}</Text>
   </View>
 );
 
@@ -32,24 +32,25 @@
   const STORAGE_KEY = '@save_galleons'
 
   const [galleons, setGalleons] = React.useState(0);
-  const [sickles, setSickles] = React.useState(galleons / 17);
-  const [knuts, setKnuts] = React.useState(sickles / 29);
 
   const DATA = [
     {
       id: 'GAL',
-      val: galleons,
-      title: 'galleons',
+      val: galleons.toFixed(2),
+      ...(galleons == 1 && {title: 'galleon'}),
+      ...(galleons != 1 && {title: 'galleons'})
     },
     {
       id: 'SIC',
-      val: galleons / 17,
-      title: 'sickles'
+      val: (galleons / 17).toFixed(2),
+      ...((galleons / 17) == 1 && {title: 'sickle'}),
+      ...((galleons / 17) != 1 && {title: 'sickles'})
     },
     {
       id: 'KNU',
-      val: galleons / 493,
-      title: 'knuts'
+      val: (galleons / 493).toFixed(2),
+      ...((galleons / 493) == 1 && {title: 'knut'}),
+      ...((galleons / 493) != 1 && {title: 'knuts'})
     }
   ]
 
@@ -78,37 +79,83 @@
   }, []);
 
   const setValue = function(val: string){
+    val = val.replace(/[^0-9]/g, '')
     setGalleons(+val);
-    setSickles(+val / 17);
-    setKnuts(+val / 29);
     saveData();
   }; 
 
    return (
-     <SafeAreaView>
-      <Text> Wizarding Currency Converter</Text>
+     <SafeAreaView style={styles.container}>
+      <Text style={styles.title}> Wizarding Currency Converter</Text>
       <KeyboardAvoidingView>
-        <Text> Galleons: </Text>
+        <Text style={styles.galleons}> Galleons: </Text>
         <TextInput 
         style = {styles.input} 
         value = {galleons.toString()}
+        keyboardType = 'numeric'
         onChangeText = {setValue} 
         />
       </KeyboardAvoidingView>
-      <FlatList 
-      data = {DATA}
-      keyExtractor = {item => item.id}
-      renderItem={({ item }) => <Text>{item.val} {item.title}</Text>}
-      />
+      <View style={styles.listView}>
+        <Text style={styles.listHeader}> Converted Currency: </Text>
+        <FlatList 
+        data = {DATA}
+        keyExtractor = {item => item.id}
+        renderItem={({ item }) => Item(item)}
+        />
+      </View>
      </SafeAreaView>
    )
 
  };
 
  const styles = StyleSheet.create({
-   input: {
+   container: {
+     backgroundColor: '#cfc2a9',
+     height: '100%',
+     width: '100%',
 
    },
+   title: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10
+   },
+   galleons: {
+     fontSize: 16,
+     textAlign: 'center',
+     marginBottom: 10
+   },
+   input: {
+     fontSize: 16,
+     borderRadius: 10,
+     marginHorizontal: 10,
+     borderWidth: 1,
+     padding: 10,
+     backgroundColor: '#a48b5a',
+     color: '#000'
+   },
+   listView: {
+    
+   },
+   listHeader: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 10
+   },
+   itemList: {
+     backgroundColor: '#a48b5a',
+     color: '#000',
+     marginVertical: 5,
+     marginHorizontal: 10,
+     padding: 10,
+     borderRadius: 10,
+     borderWidth: 1,
+   },
+   itemText: {
+    fontSize: 16,
+    textAlign: 'center',
+   }
  });
 
  export default App;
