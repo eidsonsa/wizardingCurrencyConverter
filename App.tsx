@@ -21,7 +21,7 @@
 
  import AsyncStorage from '@react-native-community/async-storage'
 
- const Item = (item: {val: number, title: string}) => (
+ const Item = (item: {val: string, title: string}) => (
   <View style={styles.itemList}>
     <Text style={styles.itemText}>{item.val} {item.title}</Text>
   </View>
@@ -51,6 +51,21 @@
       val: (galleons / 493).toFixed(2),
       ...((galleons / 493) == 1 && {title: 'knut'}),
       ...((galleons / 493) != 1 && {title: 'knuts'})
+    },
+    {
+      id: 'USD',
+      val: (galleons * 6.64).toFixed(2),
+      title: 'USD'
+    },
+    {
+      id: 'EUR',
+      val: (galleons * 5.58).toFixed(2),
+      title: 'EUR'
+    },
+    {
+      id: 'BRL',
+      val: (galleons * 21.64).toFixed(2),
+      title: 'BRL'
     }
   ]
 
@@ -114,7 +129,6 @@
      backgroundColor: '#cfc2a9',
      height: '100%',
      width: '100%',
-
    },
    title: {
     fontSize: 20,
