@@ -37,19 +37,19 @@
     {
       id: 'GAL',
       val: galleons.toFixed(2),
-      ...(galleons == 1 && {title: 'galleon'}),
-      ...(galleons != 1 && {title: 'galleons'})
+      title: 'galleon',
+      ...(galleons != 1 && {title: 'galleons'}),
     },
     {
       id: 'SIC',
       val: (galleons / 17).toFixed(2),
-      ...((galleons / 17) == 1 && {title: 'sickle'}),
+      title: 'sickle',
       ...((galleons / 17) != 1 && {title: 'sickles'})
     },
     {
       id: 'KNU',
       val: (galleons / 493).toFixed(2),
-      ...((galleons / 493) == 1 && {title: 'knut'}),
+      title: 'knut',
       ...((galleons / 493) != 1 && {title: 'knuts'})
     },
     {
@@ -94,7 +94,9 @@
   }, []);
 
   const setValue = function(val: string){
-    val = val.replace(/[^0-9]/g, '')
+    var rgx = /^[0-9]*\.?[0-9]*$/;
+    val = val.match(rgx)?.toString()!;
+    //val = val.replace(/[^0-9]/g, '')
     setGalleons(+val);
     saveData();
   }; 
@@ -106,7 +108,7 @@
         <Text style={styles.galleons}> Galleons: </Text>
         <TextInput 
         style = {styles.input} 
-        value = {galleons.toString()}
+        //value = {galleons.toString()}
         keyboardType = 'numeric'
         onChangeText = {setValue} 
         />
