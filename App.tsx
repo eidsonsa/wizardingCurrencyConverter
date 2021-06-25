@@ -17,15 +17,13 @@
    KeyboardAvoidingView,
    TextInput,
    FlatList,
+   Modal,
+   TouchableOpacity
  } from 'react-native';
 
  import AsyncStorage from '@react-native-community/async-storage'
 
- const Item = (item: {val: string, title: string}) => (
-  <View style={styles.itemList}>
-    <Text style={styles.itemText}>{item.val} {item.title}</Text>
-  </View>
-);
+
 
  const App = () => {
 
@@ -33,39 +31,64 @@
 
   const [galleons, setGalleons] = React.useState(0);
 
+  const [itemId, setItemId] = React.useState("")
+  const [itemConversion, setItemConversion] = React.useState("")
+  const [modalVisible, setModalVisible] = React.useState(false)
+
+  const openModal = (id: string, conversion: string) => {
+    setItemId(id);
+    setItemConversion(conversion);
+    setModalVisible(true)
+  }
+ 
+  const Item = (item: {id: string, val: string, title: string, conversion: string}) => (
+ 
+   <TouchableOpacity onPress = {() => openModal(item.id, item.conversion)}>
+   <View style={styles.itemList}>
+     <Text style={styles.itemText}>{item.val} {item.title}</Text>
+   </View>
+   </TouchableOpacity>
+ );
+
   const DATA = [
     {
       id: 'GAL',
       val: galleons.toFixed(2),
       title: 'galleon',
       ...(galleons != 1 && {title: 'galleons'}),
+      conversion: '1 GAL = 1 GAL'
     },
     {
       id: 'SIC',
       val: (galleons / 17).toFixed(2),
       title: 'sickle',
-      ...((galleons / 17) != 1 && {title: 'sickles'})
+      ...((galleons / 17) != 1 && {title: 'sickles'}),
+      conversion: '1 SIC = 17 GAL'
     },
     {
       id: 'KNU',
       val: (galleons / 493).toFixed(2),
       title: 'knut',
-      ...((galleons / 493) != 1 && {title: 'knuts'})
+      ...((galleons / 493) != 1 && {title: 'knuts'}),
+      conversion: '1 KNU = 493 KNU'
     },
     {
       id: 'USD',
       val: (galleons * 6.64).toFixed(2),
-      title: 'USD'
+      title: 'USD',
+      conversion: '1 GAL = 6.64 USD'
     },
     {
       id: 'EUR',
       val: (galleons * 5.58).toFixed(2),
-      title: 'EUR'
+      title: 'EUR',
+      conversion: '1 GAL = 5.58 EUR'
     },
     {
       id: 'BRL',
       val: (galleons * 21.64).toFixed(2),
-      title: 'BRL'
+      title: 'BRL',
+      conversion: '1 GAL = 21.64 BRL'
     }
   ]
 
@@ -99,10 +122,28 @@
     //val = val.replace(/[^0-9]/g, '')
     setGalleons(+val);
     saveData();
-  }; 
+  };
+  
 
    return (
      <SafeAreaView style={styles.container}>
+
+      <Modal
+      visible = {modalVisible}
+      onRequestClose = {() => {
+        setModalVisible(false)
+      }}
+      animationType="slide"
+      transparent={false}
+      >
+        <View style={styles.modalContainer}>
+        <Text style={styles.modalHeader}> {itemId} </Text>
+        <Text style={styles.modalText}> {itemConversion} </Text>
+        </View>
+      </Modal>
+
+
+
       <Text style={styles.title}> Wizarding Currency Converter</Text>
       <KeyboardAvoidingView>
         <Text style={styles.galleons}> Galleons: </Text>
@@ -171,6 +212,20 @@
    itemText: {
     fontSize: 16,
     textAlign: 'center',
+   },
+   modalContainer: {
+     backgroundColor: '#4c442c',
+     height: '100%',
+     alignItems: 'center',
+     justifyContent: 'center'
+   },
+   modalHeader: {
+    color: '#cdbfa4',
+    fontSize: 30
+   },
+   modalText: {
+     color: '#cdbfa4',
+     fontSize: 18
    }
  });
 
