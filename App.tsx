@@ -62,14 +62,14 @@
       id: 'SIC',
       val: (galleons / 17).toFixed(2),
       title: 'sickle',
-      ...((galleons / 17) != 1 && {title: 'sickles'}),
+      ...(+(galleons / 17).toFixed(2) != 1 && {title: 'sickles'}),
       conversion: '1 SIC = 17 GAL'
     },
     {
       id: 'KNU',
       val: (galleons / 493).toFixed(2),
       title: 'knut',
-      ...((galleons / 493) != 1 && {title: 'knuts'}),
+      ...(+(galleons / 493).toFixed(2) != 1 && {title: 'knuts'}),
       conversion: '1 KNU = 493 GAL'
     },
     {
