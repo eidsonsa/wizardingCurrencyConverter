@@ -70,7 +70,7 @@
       val: (galleons / 493).toFixed(2),
       title: 'knut',
       ...((galleons / 493) != 1 && {title: 'knuts'}),
-      conversion: '1 KNU = 493 KNU'
+      conversion: '1 KNU = 493 GAL'
     },
     {
       id: 'USD',
@@ -133,8 +133,7 @@
       onRequestClose = {() => {
         setModalVisible(false)
       }}
-      animationType="slide"
-      transparent={false}
+      animationType="slide" 
       >
         <View style={styles.modalContainer}>
         <Text style={styles.modalHeader}> {itemId} </Text>
@@ -149,7 +148,6 @@
         <Text style={styles.galleons}> Galleons: </Text>
         <TextInput 
         style = {styles.input} 
-        //value = {galleons.toString()}
         keyboardType = 'numeric'
         onChangeText = {setValue} 
         />
