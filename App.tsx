@@ -125,16 +125,17 @@
   };
 
   useEffect(() => {
-    readData()
+    readData();
   }, []);
+
+  useEffect(() => {
+    saveData();
+  })
 
   const setValue = function(val: string){
     var rgx = /^[0-9]*\.?[0-9]*$/;
     val = val.match(rgx)?.toString()!;
-    //val = val.replace(/[^0-9]/g, '')
-    //alert(isDarkMode)
     setGalleons(+val);
-    saveData();
   };
   
 
