@@ -10,24 +10,24 @@
 
  import React, { useEffect } from 'react';
  import {
-   SafeAreaView,
    StyleSheet,
    Text,
    View,
    KeyboardAvoidingView,
    TextInput,
-   FlatList,
    Modal,
    TouchableOpacity,
    SectionList,
-   ScrollView
+   SafeAreaView,
+   Appearance
  } from 'react-native';
 
  import AsyncStorage from '@react-native-community/async-storage'
 
-
+ const isDarkMode = Appearance.getColorScheme() === 'dark';
 
  const App = () => {
+
 
   const STORAGE_KEY = '@save_galleons'
 
@@ -132,13 +132,14 @@
     var rgx = /^[0-9]*\.?[0-9]*$/;
     val = val.match(rgx)?.toString()!;
     //val = val.replace(/[^0-9]/g, '')
+    //alert(isDarkMode)
     setGalleons(+val);
     saveData();
   };
   
 
    return (
-     <ScrollView style={styles.container}>
+     <SafeAreaView style={styles.container}>
 
       <Modal
       visible = {modalVisible}
@@ -153,8 +154,6 @@
         </View>
       </Modal>
 
-
-
       <Text style={styles.title}> Wizarding Currency Converter</Text>
       <KeyboardAvoidingView>
         <Text style={styles.galleons}> Galleons: </Text>
@@ -166,21 +165,44 @@
       </KeyboardAvoidingView>
       <View>
         <Text style={styles.listHeader}> Converted Currency: </Text>
-        <SectionList 
-        sections = {DATA}
-        keyExtractor = {item => item.id}
-        renderItem={({ item }) => Item(item)}
-        renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-        />
+        <View>
+          <SectionList 
+          sections = {DATA}
+          keyExtractor = {item => item.id}
+          renderItem={({ item }) => Item(item)}
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          />
+        </View>
       </View>
-     </ScrollView>
+     </SafeAreaView>
    )
 
  };
 
+ const COLORS = {
+  containerBackground: '#cfc2a9',
+  ...(isDarkMode  && {containerBackground: '#000'}),
+  containerText: '#000',
+  ...(isDarkMode && {containerText: '#cdbfa4'}),
+  itemBackground: '#a48b5a',
+  ...(isDarkMode && {itemBackground: '#121212'}),
+  itemText: '#000',
+  ...(isDarkMode && {itemText: '#cdbfa4'}),
+  sectionBackground: '#55482f',
+  ...(isDarkMode && {sectionBackground: '#282828'}),
+  sectionText: '#cfc2a9',
+  ...(isDarkMode && {sectionText: '#cfc2a9'}),
+  modalBackground: '#4c442c',
+  ...(isDarkMode && {modalBackground : '#121212'}),
+  modalText: '#cdbfa4',
+  ...(isDarkMode && {modalText : '#cfc2a9'})
+
+ }
+
  const styles = StyleSheet.create({
+   
    container: {
-     backgroundColor: '#cfc2a9',
+     backgroundColor: COLORS.containerBackground,
      height: '100%',
      width: '100%',
    },
@@ -188,12 +210,14 @@
     fontSize: 22,
     textAlign: 'center',
     margin: 10,
-    marginBottom: 20
+    marginBottom: 20,
+    color: COLORS.containerText
    },
    galleons: {
      fontSize: 18,
      textAlign: 'center',
-     marginBottom: 10
+     marginBottom: 10,
+     color: COLORS.containerText
    },
    input: {
      fontSize: 16,
@@ -201,12 +225,12 @@
      marginHorizontal: 10,
      borderWidth: 1,
      padding: 10,
-     backgroundColor: '#a48b5a',
-     color: '#000'
+     backgroundColor: COLORS.itemBackground,
+     color: COLORS.itemText
    },
    sectionHeader: {
-    backgroundColor: '#55482f',
-    color: '#cfc2a9',
+    backgroundColor: COLORS.sectionBackground,
+    color: COLORS.sectionText,
     marginVertical: 5,
     marginHorizontal: 10,
     padding: 10,
@@ -218,11 +242,11 @@
    listHeader: {
     fontSize: 18,
     textAlign: 'center',
-    marginVertical: 10
+    marginVertical: 10,
+    color: COLORS.containerText
    },
    itemList: {
-     backgroundColor: '#a48b5a',
-     color: '#000',
+     backgroundColor: COLORS.itemBackground,
      marginVertical: 5,
      marginHorizontal: 10,
      padding: 10,
@@ -232,19 +256,20 @@
    itemText: {
     fontSize: 16,
     textAlign: 'center',
+    color: COLORS.itemText,
    },
    modalContainer: {
-     backgroundColor: '#4c442c',
+     backgroundColor: COLORS.modalBackground,
      height: '100%',
      alignItems: 'center',
      justifyContent: 'center'
    },
    modalHeader: {
-    color: '#cdbfa4',
+    color: COLORS.modalText,
     fontSize: 30
    },
    modalText: {
-     color: '#cdbfa4',
+     color: COLORS.modalText,
      fontSize: 18
    }
  });
