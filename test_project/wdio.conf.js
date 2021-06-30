@@ -12,7 +12,7 @@ exports.config = {
        platformName: 'Android',
        platformVersion: '13',
        deviceName: 'Pixel_API_3a_30_x86',
-       app: '<path to APK>',
+       app: '/home/ealmeida/Desktop/wizardingCurrencyConverter/android/app/build/outputs/apk/release/app-release.apk',
        automationName: 'UiAutomator2'
     }],
     
