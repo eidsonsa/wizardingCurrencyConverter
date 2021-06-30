@@ -10,7 +10,7 @@ exports.config = {
        browserName: '',
        appiumVersion: '1.13.0',
        platformName: 'Android',
-       platformVersion: '13',
+       platformVersion: '11',
        deviceName: 'Pixel_API_3a_30_x86',
        app: '/home/ealmeida/Desktop/wizardingCurrencyConverter/android/app/build/outputs/apk/release/app-release.apk',
        automationName: 'UiAutomator2'
