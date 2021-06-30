@@ -46,7 +46,7 @@
   const Item = (item: {id: string, val: string, title: string, conversion: string}) => (
  
    <TouchableOpacity onPress = {() => openModal(item.id, item.conversion)}>
-   <View style={styles.itemList}>
+   <View style={styles.itemList} accessibilityLabel = "itemView" >
      <Text style={styles.itemText}>{item.val} {item.title}</Text>
    </View>
    </TouchableOpacity>
@@ -150,18 +150,19 @@
       animationType="slide" 
       >
         <View style={styles.modalContainer}>
-        <Text style={styles.modalHeader}> {itemId} </Text>
-        <Text style={styles.modalText}> {itemConversion} </Text>
+        <Text style={styles.modalHeader} accessibilityLabel = "modalHeader"> {itemId} </Text>
+        <Text style={styles.modalText} accessibilityLabel = "modalText"> {itemConversion} </Text>
         </View>
       </Modal>
 
-      <Text style={styles.title}> Wizarding Currency Converter</Text>
+      <Text style={styles.title} accessibilityLabel = "pageTitle"> Wizarding Currency Converter</Text>
       <KeyboardAvoidingView>
         <Text style={styles.galleons}> Galleons: </Text>
         <TextInput 
         style = {styles.input} 
         keyboardType = 'numeric'
-        onChangeText = {setValue} 
+        onChangeText = {setValue}
+        accessibilityLabel = "galleonsInput" 
         />
       </KeyboardAvoidingView>
       <View>
@@ -171,7 +172,7 @@
           sections = {DATA}
           keyExtractor = {item => item.id}
           renderItem={({ item }) => Item(item)}
-          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader} accessibilityLabel = "sectionHeader">{section.title}</Text>}
           />
         </View>
       </View>
