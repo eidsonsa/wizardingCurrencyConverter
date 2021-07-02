@@ -1,6 +1,7 @@
 exports.config = {
     services: ['appium'],
     port: 4723,
+    path: '/wd/hub',
     runner: 'local',
     specs: [
       './test/specs/**/*.js'
@@ -11,7 +12,7 @@ exports.config = {
        appiumVersion: '1.13.0',
        platformName: 'Android',
        platformVersion: '11',
-       deviceName: 'Pixel_API_3a_30_x86',
+       deviceName: 'Pixel_3a_API_30',
        app: '/home/ealmeida/Desktop/wizardingCurrencyConverter/android/app/build/outputs/apk/release/app-release.apk',
        automationName: 'UiAutomator2'
     }],

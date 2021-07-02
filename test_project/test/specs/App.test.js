@@ -13,9 +13,9 @@ describe('Simple App testing', () => {
     $('~galleonsInput').setValue("1234");
 
     $(sickles).waitForDisplayed(11000);
-    const sicklesQtd = $(sickles).getText();
-    console.log(sicklesQtd)
-   // expect(sicklesQtd).to.equal('72.59 sickles');
+    const sicklesText = $(sickles).getText();
+
+    expect(sicklesText).to.equal('72.59 sickles');
   });
 
 
