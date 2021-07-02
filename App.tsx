@@ -150,14 +150,14 @@
       animationType="slide" 
       >
         <View style={styles.modalContainer}>
-        <Text style={styles.modalHeader} accessibilityLabel = "modalHeader"> {itemId} </Text>
-        <Text style={styles.modalText} accessibilityLabel = "modalText"> {itemConversion} </Text>
+        <Text style={styles.modalHeader} accessibilityLabel = "modalHeader">{itemId}</Text>
+        <Text style={styles.modalText} accessibilityLabel = "modalText">{itemConversion}</Text>
         </View>
       </Modal>
 
       <Text style={styles.title} accessibilityLabel = "pageTitle"> Wizarding Currency Converter</Text>
       <KeyboardAvoidingView>
-        <Text style={styles.galleons}> Galleons: </Text>
+        <Text style={styles.galleons}>Galleons:</Text>
         <TextInput 
         style = {styles.input} 
         keyboardType = 'numeric'
@@ -166,7 +166,7 @@
         />
       </KeyboardAvoidingView>
       <View>
-        <Text style={styles.listHeader}> Converted Currency: </Text>
+        <Text style={styles.listHeader}>Converted Currency:</Text>
         <View>
           <SectionList 
           sections = {DATA}
